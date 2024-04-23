@@ -1,8 +1,0 @@
-path: /Users/balazsfarkas/LEARN/BSC/FitMySizeActual/FitMySize
-train: ./dataset/train/images/
-val: ./dataset/val/images/
-
-kpt_shape: [8, 2]
-flip_idx: [1,0,3,2,5,4,7,6]
-names:
-  0: body
