@@ -1,0 +1,6 @@
+flask
+flask_cors
+rembg
+opencv-python
+numpy
+pillow
