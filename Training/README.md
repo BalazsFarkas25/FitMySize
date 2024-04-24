@@ -29,7 +29,8 @@ To build the dataset with these columns run:
 - ```pip install -r requirements.txt```
 
 - ```python resize_image.py```
-This part is needed to resize the image based on the known height.
+
+This script resizes the images based on the height of the person on the image.
 This is only needed, because I observed that the training images are normalized. 156cm person and 187cm person have the same size on the image. Without resizing, the cm value mapping does not make sense.
 
 This is only needed for the training data, as the user will be properly guided from what angle and distance to take the picture.

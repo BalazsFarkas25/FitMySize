@@ -1,6 +1,6 @@
 ## Application Section
 
-I implemented simple Front-End and Server parts to create a user-friendly option to showcase the Cloth size suggestion process.
+I implemented a simple Front-End and Server part, to create a user-friendly option to showcase the Cloth size suggestion process.
 
 Currently, I have a front-end where you can take a picture, which gets sent to the Python server for evaluation. 
 

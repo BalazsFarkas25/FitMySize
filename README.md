@@ -27,3 +27,10 @@ Conclusions:
 - Training dataset not big enough. POC done -> increase dataset
 - I have to train better keypoint detection model with more data because regression model does not show linearity (R2 = -0.26) between cm value and pixel distance value.
 - These were expected, as the training was done on a really small dataset
+
+
+2024-03-26
+
+Achieved
+
+- [Project kick-off document](https://docs.google.com/document/d/1puc7ISEr8Z04BxxYuRpCgMbOrizoeGfTrX2ffYIyr1U/edit)
