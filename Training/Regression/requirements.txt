@@ -1,2 +1,4 @@
 ultralytics
 pandas
+opencv-python
+numpy
