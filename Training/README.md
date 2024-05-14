@@ -40,5 +40,14 @@ This is only needed for the training data, as the user will be properly guided f
 
 See output as [keypoints.csv](./Regression/keypoints.csv) and [height.csv](./Regression/height.csv)
 
-### Jupiter Notebook
-You can open this [notebook](./Regression/Regression.ipynb) and see the result of the Regression model.
+### Exporting Magic Numbers
+In order to use the obtained regression values from all the keypoint measurements, run
+
+
+- ```python generate_magic_numbers.py```
+
+This creates a .env file in the root of the project, that you can use in the Evaluation process (using it in an application to retrive predicted cloth size)
+
+### Jupiter Notebook - For Debugging Purposes
+You can open this [notebook](./Regression/Regression.ipynb) and see the result of the Regression model and easily play around with the results...etc.
+This only serves debugging/playground purpose during development.

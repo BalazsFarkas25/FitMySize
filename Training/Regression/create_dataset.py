@@ -90,45 +90,28 @@ if __name__ == '__main__':
     #dataset_dir = "../../Annotation/dataset/train/images"
     dataset_dir = "./dataset"
     model_path = "../Keypoints/runs/pose/train2/weights/best.pt"
-    measurement_id = "height"
-
-    ################################################################################
-    #################### GET HEIGHT MAPPING ########################################
-    ################################################################################
-    
-    X_values = []
-    Y_values = []
-    list_of_images = get_body_dataset(dataset_dir)
-    for curr_img in list_of_images:
-        # get known cm value
-        height_cm = get_height_info(curr_img)
-        # get model's boddy height prediction
-        body_height = get_prediction_value(curr_img,dataset_dir,model_path,measurement_id)
-        
-        X_values.append(body_height)
-        Y_values.append(height_cm)
-    
-    df = pd.DataFrame({'Body Height':X_values, 'CM Distance':Y_values}) 
-    df.to_csv('temp2.csv', index=False) 
 
     ####################################################################################
     #################### GET MEASUREMENT POINTS MAPPING ################################
     ####################################################################################
 
-    measurement_id = "shoulder-breadth"
-    X_values = []
-    Y_values = []
-    list_of_images = get_body_dataset(dataset_dir)
-    for curr_img in list_of_images:
-        # get known cm value
-        measurement_cm = get_measurement_info(measurement_id,curr_img)
-        # get model's keypoint prediction
-        keypoint_coordinates = get_prediction_value(curr_img,dataset_dir,model_path,measurement_id)
-        # calculate pixel distance from keypoint coordinates
-        pixel_distance = calculate_pixel_distance(keypoint_coordinates)
-        
-        X_values.append(pixel_distance)
-        Y_values.append(measurement_cm)
     
-    df = pd.DataFrame({'Keypoint Pixel Distance':X_values, 'CM Distance':Y_values}) 
-    df.to_csv('temp.csv', index=False) 
+    list_of_images = get_body_dataset(dataset_dir)
+    
+    for curr_measurement_point in measurement_mapping.keys():
+        X_values = []
+        Y_values = []
+    
+        for curr_img in list_of_images:
+            # get known cm value
+            measurement_cm = get_measurement_info(curr_measurement_point,curr_img)
+            # get model's keypoint prediction
+            keypoint_coordinates = get_prediction_value(curr_img,dataset_dir,model_path,curr_measurement_point)
+            # calculate pixel distance from keypoint coordinates
+            pixel_distance = calculate_pixel_distance(keypoint_coordinates)
+            
+            X_values.append(pixel_distance)
+            Y_values.append(measurement_cm)
+        
+        df = pd.DataFrame({'Keypoint Pixel Distance':X_values, 'CM Distance':Y_values}) 
+        df.to_csv(f'./PixelToCmMapping/{curr_measurement_point}.csv', index=False) 
