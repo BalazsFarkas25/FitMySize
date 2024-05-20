@@ -10,6 +10,19 @@ Please read specific folder's Readme to understand what different parts do in mo
 
 
 ## Changelog
+2024-05-17
+
+Achieved
+
+- increased dataset for Regression model (now using 6000imgs)
+- tried out non ML approaches to retrieve pixel distance value of shoulders
+
+Conclusions:
+
+- Only easy keypoint to detect without ML was shoulder, but ML also predicts this accurately. Non ML algorith wasn't performing better than ML.
+- Increasing dataset size for the Regression model provides more accurate results. Importance of mispredicted keypoints is less.
+
+
 2024-04-24
 
 Achieved
