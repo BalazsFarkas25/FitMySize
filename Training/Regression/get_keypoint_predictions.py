@@ -103,15 +103,16 @@ if __name__ == '__main__':
         Y_values = []
     
         for curr_img in list_of_images:
-            # get known cm value
-            measurement_cm = get_measurement_info(curr_measurement_point,curr_img)
-            # get model's keypoint prediction
-            keypoint_coordinates = get_prediction_value(curr_img,dataset_dir,model_path,curr_measurement_point)
-            # calculate pixel distance from keypoint coordinates
-            pixel_distance = calculate_pixel_distance(keypoint_coordinates)
-            
-            X_values.append(pixel_distance)
-            Y_values.append(measurement_cm)
+            if(curr_img.endswith('.png')):
+                # get known cm value
+                measurement_cm = get_measurement_info(curr_measurement_point,curr_img)
+                # get model's keypoint prediction
+                keypoint_coordinates = get_prediction_value(curr_img,dataset_dir,model_path,curr_measurement_point)
+                # calculate pixel distance from keypoint coordinates
+                pixel_distance = calculate_pixel_distance(keypoint_coordinates)
+                
+                X_values.append(pixel_distance)
+                Y_values.append(measurement_cm)
         
         df = pd.DataFrame({'Keypoint Pixel Distance':X_values, 'CM Distance':Y_values}) 
         df.to_csv(f'./PixelToCmMapping/{curr_measurement_point}.csv', index=False) 

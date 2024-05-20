@@ -36,9 +36,9 @@ This is only needed, because I observed that the training images are normalized.
 This is only needed for the training data, as the user will be properly guided from what angle and distance to take the picture.
 
 
-- ```python create_dataset.py```
+- ```python get_keypoint_predictions.py```
 
-See output as [keypoints.csv](./Regression/keypoints.csv) and [height.csv](./Regression/height.csv)
+This script generates csv file with (X,Y values) for Regression model. See output e.g. [chest.csv](./Regression/PixelToCmMapping/chest.csv).
 
 ### Exporting Magic Numbers
 In order to use the obtained regression values from all the keypoint measurements, run

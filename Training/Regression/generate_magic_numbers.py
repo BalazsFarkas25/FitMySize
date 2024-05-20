@@ -17,11 +17,11 @@ def get_values(measurement_id):
 
 def get_regression_result(X_values,Y_values, isDebug = False):
     # Split tto train & test dataset
-    X_train = np.array([X_values[:-20]]).reshape(-1, 1)
-    X_test = np.array([X_values[-20:]]).reshape(-1, 1)
+    X_train = np.array([X_values[:-1200]]).reshape(-1, 1)
+    X_test = np.array([X_values[-1200:]]).reshape(-1, 1)
 
-    Y_train = np.array([Y_values[:-20]]).reshape(-1, 1)
-    Y_test = np.array([Y_values[-20:]]).reshape(-1, 1)
+    Y_train = np.array([Y_values[:-1200]]).reshape(-1, 1)
+    Y_test = np.array([Y_values[-1200:]]).reshape(-1, 1)
 
     regr = linear_model.LinearRegression()
     regr.fit(X_train, Y_train)
