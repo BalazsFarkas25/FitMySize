@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BodyPix Video Stream</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+        }
+        video {
+            width: 640px;
+            height: 480px;
+            object-fit: cover;
+        }
+        #banner {
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">BodyPix Video Stream</h1>
+    <h2 id="shoulderResult" style="text-align:center;">Shoulder: 0 cm</h2>
+    <h2 id="chestResult" style="text-align:center;">Chest: 0 cm</h2>
+    <h2 id="display-result-shoulder" style="text-align:center; display: none;"></h2>
+    <h2 id="display-result-chest" style="text-align:center; display: none;"></h2>
+    <div id="container">
+        <video id="video" autoplay></video>
+        <canvas id="output" width="640" height="480"></canvas>
+    </div>
+    <div id="banner">Please raise your hands, forming a T shape</div>
+    <!-- Requirements of body-pix -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation"></script>
+    <script src="{{ url_for('static', filename='detection.js') }}"></script>
+</body>
+</html>

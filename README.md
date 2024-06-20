@@ -10,6 +10,12 @@ Please read specific folder's Readme to understand what different parts do in mo
 
 
 ## Changelog
+2024-06-20
+
+Added
+
+- application (backend+UI)
+
 2024-05-17
 
 Achieved
