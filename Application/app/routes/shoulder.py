@@ -9,8 +9,9 @@ shoulder_bp = Blueprint("shoulder", __name__)
 @shoulder_bp.route('/detect_shoulder', methods=['POST'])
 def detect_shoulder():
     data = request.json['data']
+    user_height = request.json['userInput']
     img_data = base64.b64decode(data.split(',')[1])
     nparr = np.frombuffer(img_data, np.uint8)
     image = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
-    shoulder_length, keypoints = evaluate_shoulders(image)
+    shoulder_length, keypoints = evaluate_shoulders(image, int(user_height))
     return jsonify({"shoulder": {"result":shoulder_length, "keypoints": keypoints}}), 200

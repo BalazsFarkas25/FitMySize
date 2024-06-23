@@ -158,7 +158,7 @@ def calculate_torso_width(data):
 
 
 
-def evaluate_shoulders(img):
+def evaluate_shoulders(img, user_height):
     left_half, right_half = get_white_contour_of_half_bodies(img)
     contour_white_pixel_right = find_contour_pixels(right_half, isRightSide=True)
     contour_white_pixel_left = find_contour_pixels(left_half, isRightSide=False)
@@ -169,12 +169,11 @@ def evaluate_shoulders(img):
     x_right = [value + left_half.shape[1] for value in x_right]
 
     body_height_pixel = find_body_height(contour_white_pixel_right)
-    shoulder_length = (176/body_height_pixel)*(x_right[-1]-x_left[-1])
+    shoulder_length = (user_height/body_height_pixel)*(x_right[-1]-x_left[-1])
     print("Total length of the line:", shoulder_length) 
     return shoulder_length, [x_right[-1],y_right[-1],x_left[-1],y_left[-1]]
 
-def evaluate_chest(img):
-    cv2.imwrite('./chest_test.jpg', img)
+def evaluate_torso(img, user_height):
     left_half, right_half = get_white_contour_of_half_bodies(img)
     contour_white_pixel_right = find_contour_pixels(right_half, isRightSide=True)
     contour_white_pixel_left = find_contour_pixels(left_half, isRightSide=False)
@@ -184,6 +183,6 @@ def evaluate_chest(img):
     print(body_height_pixel)
     print(calculate_torso_width(contour_white_pixel_right[:len(contour_white_pixel_right)//2]))
     print(calculate_torso_width(contour_white_pixel_left[:len(contour_white_pixel_left)//2]))
-    torso_width = (176/body_height_pixel)*(torso_width)
+    torso_width = (user_height/body_height_pixel)*(torso_width)
     print("Total length of the line:", torso_width)
     return torso_width
