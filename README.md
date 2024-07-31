@@ -8,6 +8,8 @@ Please read specific folder's Readme to understand what different parts do in mo
 - Create Regression model to convert pixel distance to cm value
 - Application to showcase workflow
 
+## Video
+- Real life demonstration of the application: https://youtu.be/_yuzLhN-jqQ
 
 ## Changelog
 2024-06-20
