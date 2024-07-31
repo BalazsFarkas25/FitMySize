@@ -8,6 +8,13 @@ let torsoResults = [];
 let userInputValue = '';
 let shoulderDetectionPart = true;
 
+const exampleSizeGroups = {
+    "S": { shoulder: { lower: 0, upper: 42 }, torso: { lower: 0, upper: 45 } },
+    "M": { shoulder: { lower: 42, upper: 44 }, torso: { lower: 45, upper: 50 } },
+    "L": { shoulder: { lower: 44, upper: 45.5 }, torso: { lower: 50, upper: 55 } },
+    "XL": { shoulder: { lower: 45.5, upper: 100 }, torso: { lower: 55, upper: 100 } },
+};
+
 async function setupCamera() {
     const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
@@ -140,6 +147,25 @@ function collectShoulderData() {
     });
 }
 
+function suggestClothingSize(shoulderPrediction,torsoPrediction){
+    let resultFromShoulder = "NaN";
+    let resultFromTorso = "NaN";
+    for (const size in exampleSizeGroups) {
+        const ranges = exampleSizeGroups[size];
+        if (shoulderPrediction > ranges.shoulder.lower && shoulderPrediction <= ranges.shoulder.upper) {
+            resultFromShoulder = size
+        }
+        if(torsoPrediction > ranges.torso.lower && torsoPrediction <= ranges.torso.upper){
+            resultFromTorso = size;
+        }
+    }
+    if(resultFromShoulder === resultFromTorso){
+        return resultFromShoulder;
+    }else{
+        return `${resultFromShoulder}/${resultFromTorso}`;
+    }
+}
+
 function collectTorsoData() {
     return new Promise((resolve) => {
         const intervalId = setInterval(() => {
@@ -155,6 +181,8 @@ function collectTorsoData() {
 document.getElementById('startProcess').addEventListener('click', () => {
     userInputValue = document.getElementById('userInput').value;
     setTimeout(() => {
+        let shoulderPrediction = 0;
+        let torsoPrediction = 0;
         // Wait 5 seconds after user input to make time for user to get in position
         // 1. Step = load body segmentation model and start shoulder processing
         setupCamera().then(() => {
@@ -165,7 +193,7 @@ document.getElementById('startProcess').addEventListener('click', () => {
             .then((shoulderResults) => {
                 document.getElementById('shoulderResult').style.display = 'none';
                 const average = array => array.reduce((a, b) => a + b) / array.length;
-                const shoulderPrediction = average(shoulderResults)
+                shoulderPrediction = average(shoulderResults)
                 const resultElement = document.getElementById('display-result-shoulder');
                 resultElement.textContent = `Shoulder prediction: ${shoulderPrediction} cm`;
                 resultElement.style.display = 'block';
@@ -182,9 +210,15 @@ document.getElementById('startProcess').addEventListener('click', () => {
             .then((torsoResults) => {
                 document.getElementById('torsoResult').style.display = 'none';
                 const average = array => array.reduce((a, b) => a + b) / array.length;
-                const torsoPrediction = average(torsoResults)
+                torsoPrediction = average(torsoResults)
                 const resultElement = document.getElementById('display-result-torso');
                 resultElement.textContent = `Torso prediction: ${torsoPrediction} cm`;
+                resultElement.style.display = 'block';
+            })
+            .then(() =>{
+                const clothSize = suggestClothingSize(shoulderPrediction,torsoPrediction);
+                const resultElement = document.getElementById('display-cloth-result');
+                resultElement.textContent = `Size group: ${clothSize}`;
                 resultElement.style.display = 'block';
             })
             .catch((error) => {
